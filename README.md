@@ -27,3 +27,11 @@ _Everything in MapleStory_
 ## 업데이트
 #### 백엔드
 1. 기초 파일 셋팅
+
+#### 패키지 추가
+1. flask-bcrypt
+2. flask-restplus
+3. flask_testing
+4. Flask-Migrate
+5. Flask-Script
+6. pyjwt
