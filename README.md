@@ -31,7 +31,8 @@ _Everything in MapleStory_
 #### 패키지 추가
 1. flask-bcrypt
 2. flask-restplus
-3. flask_testing
-4. Flask-Migrate
-5. Flask-Script
-6. pyjwt
+3. flask-restful
+4. flask_testing
+5. Flask-Migrate
+6. Flask-Script
+7. pyjwt
