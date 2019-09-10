@@ -8,11 +8,11 @@ import os
 #
 
 DB_CONNECT = {
-    'db': os.getenv('EIM_DB_NAME'),
-    'passwd': os.getenv('EIM_DB_PW'),
-    'user': os.getenv('EIM_DB_WRITE'),
-    'host': os.getenv('EIM_DB_HOST'),
-    'port': int(os.getenv('EIM_DB_PORT')),
+    'db': 'eim_test',
+    'passwd': 'sin5chel',
+    'user': 'root',
+    'host': '34.207.159.244',
+    'port': 3306,
     'charset': 'utf8',
     'use_unicode': True
 }
