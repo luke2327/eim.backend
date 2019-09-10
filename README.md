@@ -19,10 +19,30 @@ _Everything in MapleStory_
 #### 필수 의존성 모듈 설치
 1. pip 를 설치합니다.
 2. Flask 를 설치합니다. (`sudo pip install Flask`)
+3. virtualenv 를 설치합니다. (`sudo pip install virtualenv`)
+4. flask-restful 를 설치합니다. (`sudo pip install flask-restful`)
 
 ## 실행 방법
 #### 백엔드
-[추가바람]
+- 환경 변수 셋팅
+1. 자신의 쉘 확인 : (`echo $SHELL`)
+2. 쉘 설정 파일에서 환경 변수 설정 : (`vi ~/.[SHELL]rc`)
+3. 환경 변수 설정 : 맨 아래에 추가
+```
+export FLASK_APP=eim.backend
+export FLASK_ENV=development
+```
+
+
+- venv 설정
+1. 리포지토리 폴더로 이동 후 venv 생성 (`cd eim.backend && virtualenv venv`)
+2. venv 활성화 (`cd venv/bin && .activate`)
+3. 해당 venv 에서 모듈들을 설치해주면 된다
+
+
+- 실행
+1. `python api.py`
+
 
 ## 업데이트
 #### 백엔드

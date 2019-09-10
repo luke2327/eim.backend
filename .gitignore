@@ -1,9 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
 .DS_Store
 .env
+.venv
 .flaskenv
 *.pyc
 *.pyo
 env/
+venv/
 env*
 dist/
 build/
@@ -15,6 +25,7 @@ _mailinglist
 .pytest_cache/
 .idea/
 docs/_build/
+*.swp
 
 # Coverage reports
 htmlcov/
