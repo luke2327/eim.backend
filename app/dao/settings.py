@@ -12,7 +12,7 @@ DB_CONNECT = {
     'passwd': os.getenv('EIM_DB_PW'),
     'user': os.getenv('EIM_DB_WRITE'),
     'host': os.getenv('EIM_DB_HOST'),
-    'port': os.getenv('EIM_DB_PORT'),
-    'charset': 'utf-8',
+    'port': int(os.getenv('EIM_DB_PORT')),
+    'charset': 'utf8',
     'use_unicode': True
 }

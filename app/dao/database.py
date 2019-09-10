@@ -3,7 +3,7 @@ import json    # json 형식으로 리턴 해주기위해 사용
 import pymysql # python mysql 연결 드라이버
 import logging
 from settings import DB_CONNECT # DB 셋팅을 가져온다
-
+print DB_CONNECT
 def getConnection():
     return pymysql.connect(
                             host=DB_CONNECT['host'],
@@ -19,7 +19,7 @@ def getYoutubeList():
     cursor = conn.cursor()
 
     sql = (
-      'SELECT * FROM UserInfo LIMIT 10'
+      'SELECT link FROM UserInfo LIMIT 10'
     )
 
     try:
@@ -30,5 +30,5 @@ def getYoutubeList():
         result = e
     finally:
         conn.close()
-    
+
     return result
