@@ -8,7 +8,7 @@ import os
 #
 
 DB_CONNECT = {
-    'db': 'eim_test',
+    'db': 'eim',
     'passwd': 'sin5chel',
     'user': 'root',
     'host': '34.207.159.244',

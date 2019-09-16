@@ -32,3 +32,17 @@ def getYoutubeList():
         conn.close()
 
     return result
+
+def getSearchEnhanceList(data):
+    conn = getConnection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    if data['cate'] == 'all':
+        sql = "SELECT * FROM `item` WHERE `name` LIKE '%%%s%%'" %(data['name'])
+    else:
+        sql = "SELECT * FROM `item` WHERE `cate` = `%s` AND `name` LIKE '%%%s%%'" %(data['cate'], data['name'])
+
+    cursor.execute(sql)
+    result = cursor.fetchall()
+
+    return result
