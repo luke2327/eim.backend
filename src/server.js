@@ -3,6 +3,7 @@ const app = express();
 const PORT = 6050;
 const dbApi = require('./config/database/dbapi');
 
+app.use(express.json());
 
 app.get('/data', async (req,res)=>{
     try{
@@ -13,6 +14,12 @@ app.get('/data', async (req,res)=>{
     } finally {
         conn.end();
     }
+})
+
+app.post('/api/enhance/dialog/input/search', (req, res) => {
+    const params = req.body;
+
+    res.send(req.body);
 })
 
 app.listen(PORT,()=>{
