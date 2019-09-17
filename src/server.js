@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
+const util = require('util');
 const app = express();
 const PORT = 6050;
 const dbconfig = require('./config/database');
@@ -7,17 +8,15 @@ const dbconfig = require('./config/database');
 app.get('/data', async (req,res)=>{
     try{
         const conn = await mysql.createConnection(dbconfig.connection);
-        const result = await conn.query('SELECT * FROM `item`', (err, res) => {
-            if(err) throw err;
+        const query = await util.promisify(conn.query).bind(conn);
+        const result = await query('SELECT * FROM `item`');
 
-            console.log(res);
-            return res;
-        });
+        res.send(result);
     } catch (e) {
         console.log(e)
+    } finally {
+        conn.end();
     }
-
-    res.json(result);
 })
 
 app.listen(PORT,()=>{
