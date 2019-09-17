@@ -1,34 +1,27 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+# OS X
+.DS_Store*
+Icon?
+._*
 
-# C extensions
-*.so
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-.DS_Store
-.env
-.venv
-.flaskenv
-*.pyc
-*.pyo
-env/
-venv/
-env*
-dist/
-build/
-*.egg
-*.egg-info/
-_mailinglist
-.tox/
-.cache/
-.pytest_cache/
-.idea/
-docs/_build/
-*.swp
+# Linux
+.directory
+*~
 
-# Coverage reports
-htmlcov/
-.coverage
-.coverage.*
-*,cover
+
+# npm
+node_modules
+package-lock.json
+*.log
+*.gz
+
+
+# Coveralls
+coverage
+
+# Benchmarking
+benchmarks/graphs

@@ -1,0 +1,25 @@
+{
+  "name": "eim.backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luke2327/eim.backend.git"
+  },
+  "author": "luke2327",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luke2327/eim.backend/issues"
+  },
+  "homepage": "https://github.com/luke2327/eim.backend#readme",
+  "dependencies": {
+    "concurrently": "^4.1.2",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.2"
+  }
+}
