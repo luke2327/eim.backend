@@ -5,7 +5,7 @@ const settings = require('./settings');
 
 module.exports = {
   selectQuery: async (data) => {
-    const result;
+    let result;
     const conn = await mysql.createConnection(settings.connection);
 
     try{
