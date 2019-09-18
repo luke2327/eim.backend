@@ -14,7 +14,7 @@ module.exports = {
     } catch (e) {
       throw e;
     } finally {
-      conn.close();
+      conn.end();
     }
     
     return result;
