@@ -21,6 +21,7 @@ app.get('/data', async (req,res)=>{
 })
 
 app.post('/api/enhance/dialog/input/search', async (req, res) => {
+    console.log('POST :: /api/enhance/dialog/input/search');
     const result = await enhanceApi.getEnhanceSearchItem(req.body);
 
     res.send(result);
