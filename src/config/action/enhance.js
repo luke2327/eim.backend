@@ -1,4 +1,4 @@
-const dbApi = require('../database/dbapi');
+const dbApi = require('config/database/dbapi');
 
 module.exports = {
   getEnhanceSearchItem : async (params) => {

@@ -8,11 +8,11 @@ module.exports = {
     let result;
     const conn = await mysql.createConnection(settings.connection);
 
-    try{
+    try {
       const query = await util.promisify(conn.query).bind(conn);
       result = await query(data);
     } catch (e) {
-      throw e;
+      console.log(e);
     } finally {
       conn.end();
     }
