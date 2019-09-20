@@ -17,26 +17,21 @@ app.get('/data', async (req, res)=>{
     } catch (e) {
         console.log(e);
     }
-})
+});
 
 app.post('/api/enhance/dialog/input/search', async (req, res) => {
     console.log('POST :: /api/enhance/dialog/input/search');
     const result = await enhanceApi.getEnhanceSearchItem(req.body);
 
     res.send(result);
-})
+});
 
 app.post('/api/vod/youtube/list', async (req, res) => {
     const result = await crawledApi.getVodList();
 
     res.send(result);
-
-})
-
-app.get('/test', async (req, res) => {
-    res.send('hello')
-})
+});
 
 app.listen(PORT, () => {
     console.log(`server running on PORT ${PORT}`);
-})
+});
