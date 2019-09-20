@@ -27,7 +27,7 @@ app.post('/api/enhance/dialog/input/search', async (req, res) => {
 });
 
 app.post('/api/vod/youtube/list', async (req, res) => {
-    const result = await crawledApi.getVodList();
+    const result = await crawledApi.getVodList(req.body);
 
     res.send(result);
 });

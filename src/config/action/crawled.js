@@ -6,7 +6,11 @@ module.exports = {
 
     let sql;
 
-    sql = `SELECT * FROM vod`;
+    if (params) {
+      sql = `SELECT * FROM vod ORDER BY create_tmp DESC LIMIT ${params.max}`;
+    } else {
+      sql = `SELECT * FROM vod`;
+    }
     const res = await dbApi.selectQuery(sql);
     const httpScheme = 'https://',
           ytImgUnit = '/hqdefault.jpg',
