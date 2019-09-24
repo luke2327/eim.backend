@@ -2,10 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const PORT = 6050;
-const dbApi = require('./config/database/dbapi');
-const enhanceApi = require('./config/action/enhance');
-const crawledApi = require('./config/action/crawled');
-const mapleApi = require('./middlewares/mapleApi');
+const dbApi = require('config/database/dbapi');
+const enhanceApi = require('config/action/enhance');
+const crawledApi = require('config/action/crawled');
+const mapleApi = require('middlewares/mapleApi');
 
 app.use(cors());
 app.use(express.json());

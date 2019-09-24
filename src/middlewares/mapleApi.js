@@ -1,8 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const common = require('utils/common');
 
-router.post('/item', (req, res) => {
-  console.log(req.body);
+router.post('/item', async (req, res) => {
+  req.body.path = req.route.path;
+
+  const result = await common.sendMaple(req.body);
+
+  res.send(result.data);
 });
 
 router.post('/item/list', (req, res) => {
