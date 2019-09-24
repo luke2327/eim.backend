@@ -5,10 +5,11 @@ const PORT = 6050;
 const dbApi = require('./config/database/dbapi');
 const enhanceApi = require('./config/action/enhance');
 const crawledApi = require('./config/action/crawled');
-
+const mapleApi = require('./middlewares/mapleApi');
 
 app.use(cors());
 app.use(express.json());
+app.use('/api/maple', mapleApi);
 
 app.get('/data', async (req, res)=>{
     try {
