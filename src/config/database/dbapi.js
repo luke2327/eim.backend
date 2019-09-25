@@ -18,5 +18,22 @@ module.exports = {
     }
     
     return result;
+  },
+
+  insertQuery: async (data) => {
+    console.log(data);
+    let result;
+    const conn = await mysql.createConnection(settings.connection);
+
+    try {
+      const query = await util.promisify(conn.query).bind(conn);
+      result = await query(data);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      conn.end();
+    }
+    
+    return result;
   }
 }
