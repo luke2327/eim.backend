@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const common = require('utils/common');
 
-router.post('/item', async (req, res) => {
+router.post('/item', async (err, req, res) => {
   req.body.path = req.route.path;
 
   const result = await common.sendMaple(req.body);
@@ -10,36 +10,68 @@ router.post('/item', async (req, res) => {
   res.send(result.data);
 });
 
-router.post('/item/list', (req, res) => {
-  console.log(req.body);
+router.post('/item/list', async (req, res) => {
+  req.body.path = req.route.path;
+
+  const result = await common.sendMaple(req.body);
+
+  res.send(result.data);
 });
 
-router.post('/item/category', (req, res) => {
-  console.log(req.body);
+router.post('/item/category', async (req, res) => {
+  req.body.path = req.route.path;
+
+  const result = await common.sendMaple(req.body);
+
+  res.send(result.data);
 });
 
-router.post('/item/category/overall-category', (req, res) => {
-  console.log(req.body);
+router.post('/item/category/overall-category', async (req, res) => {
+  req.body.path = req.route.path;
+
+  const result = await common.sendMaple(req.body);
+
+  res.send(result.data);
 });
 
-router.post('/item/bulk', (req, res) => {
-  console.log(req.body);
+router.post('/item/bulk', async (req, res) => {
+  req.body.path = req.route.path;
+
+  const result = await common.sendMaple(req.body);
+
+  res.send(result.data);
 });
 
-router.post('/item/detail', (req, res) => {
-  console.log(req.body);
+router.post('/item/detail', async (req, res) => {
+  req.body.path = req.route.path;
+
+  const result = await common.sendMaple(req.body);
+
+  res.send(result.data);
 });
 
-router.post('/item/icon', (req, res) => {
-  console.log(req.body);
+router.post('/item/icon', async (req, res) => {
+  req.body.path = req.route.path;
+
+  const result = await common.sendMaple(req.body);
+
+  res.send(result.data);
 });
 
-router.post('/item/icon-raw', (req, res) => {
-  console.log(req.body);
+router.post('/item/icon-raw', async (req, res) => {
+  req.body.path = req.route.path;
+
+  const result = await common.sendMaple(req.body);
+
+  res.send(result.data);
 });
 
-router.post('/item/name', (req, res) => {
-  console.log(req.body);
+router.post('/item/name', async (req, res) => {
+  req.body.path = req.route.path;
+
+  const result = await common.sendMaple(req.body);
+
+  res.send(result.data);
 });
 
 module.exports = router;
