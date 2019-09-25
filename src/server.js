@@ -11,15 +11,6 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/maple', mapleApi);
 
-app.get('/data', async (req, res)=>{
-    try {
-        const result = await dbApi.selectQuery('SELECT * FROM `item`');
-        res.send(result);
-    } catch (e) {
-        console.log(e);
-    }
-});
-
 app.post('/api/enhance/dialog/input/search', async (req, res) => {
     console.log('POST :: /api/enhance/dialog/input/search');
     const result = await enhanceApi.getEnhanceSearchItem(req.body);
