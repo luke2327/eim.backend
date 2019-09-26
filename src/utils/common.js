@@ -5,12 +5,12 @@ module.exports = {
   sendMaple: async (req, type = 'get') => {
     const l = config.getConfigMaple(req.locale);
     const url = `http://maplestory.io/api/${l.region}/${l.version}${req.path}`;
-
-    console.log(url);
     
     delete req.path;
     delete req.locale;
 
-    return axios.get(url, { params: req });
+    return type === 'get'
+      ? axios.get(url, { params: req })
+      : axios.post(url, req);
   },
 };

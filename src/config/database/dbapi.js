@@ -20,14 +20,23 @@ module.exports = {
     return result;
   },
 
-  insertQuery: async (data) => {
-    console.log(data);
+  insertQuery: async (...data) => {
     let result;
     const conn = await mysql.createConnection(settings.connection);
 
+    await conn.connect((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    console.log(data[0]);
+    console.log(data[1]);
+    console.log([data]);
+
     try {
       const query = await util.promisify(conn.query).bind(conn);
-      result = await query(data);
+      result = await query(data[0], data[1]);
     } catch (e) {
       console.log(e);
     } finally {
