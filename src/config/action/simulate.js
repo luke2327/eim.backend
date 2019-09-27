@@ -19,7 +19,8 @@ module.exports = {
                     AND req_level <= ${params.maxItemLevel} 
                     AND is_cash = ${params.isCash || 0} 
                     AND overall_category = '${params.category}' 
-                    AND name_ko LIKE "%${params.label}%"`;
+                    AND name_ko LIKE "%${params.label}%"
+                  GROUP BY name_ko`;
 
         break;
       } case 'ko': {
@@ -28,7 +29,8 @@ module.exports = {
                     AND req_level <= ${params.maxItemLevel} 
                     AND is_cash = ${params.isCash || 0} 
                     AND overall_category = '${params.category}'
-                    AND name_ko LIKE "%${params.label}%"`;
+                    AND name_ko LIKE "%${params.label}%"
+                  GROUP BY name_ko`;
 
         break;
       } case 'ja': {

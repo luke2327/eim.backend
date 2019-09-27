@@ -3,7 +3,6 @@ const router = express.Router();
 const common = require('utils/common');
 const dbApi = require('config/database/dbapi');
 const _ = require('lodash');
-const mysql = require('mysql')
 
 router.post('/item', async (req, res) => {
   req.body.path = req.url;
@@ -78,7 +77,6 @@ router.post('/item/name', async (req, res) => {
 });
 
 router.post('/item/input', async (req, res) => {
-  console.log(req.body);
   req.body.path = req.url.replace('/input', '');
 
   const result = await common.sendMaple(req.body);
@@ -94,35 +92,23 @@ router.post('/item/input', async (req, res) => {
       } 
       else if (typeof value === 'object') {
         _.map(value, (sub_value, sub_key) => {
-          query_data.push(sub_value);
+          query_data.push(typeof sub_value === 'string' ? `"${sub_value}"` : sub_value);
         });
       } else if (typeof value === 'boolean') {
         query_data.push(value === false ? 0 : 1);
       }
       else {
-        query_data.push(value);
+        query_data.push(typeof value === 'string' ? `"${value}"` : value);
       }
     });
     real_query.push(query_data);
     query_data = [];
   });
+
   _.forEach(real_query, async query => {
     if (req.body.subCategoryFilter === 'Miracle Cube') {
-      // console.log(`INSERT IGNORE INTO item_cube (is_cash, name_ko, \`desc\`, id, overall_category, category, sub_category low_item_id, high_item_id) VALUES (
-      //   ${query[0]}, '${query[1]}', '${query[2]}', ${query[3]}, '${query[4]}', '${query[5]}', ${query[6]}, ${query[7]} , ${query[8]}
-      // )`);
-      
-      // await dbApi.insertQuery(`INSERT IGNORE INTO item_cube (is_cash, name_ko, \`desc\`, item_no, overall_category, category, sub_category low_item_id, high_item_id) 
-      // VALUES (??)`, query);
-
-      const ss = mysql.format(`INSERT IGNORE INTO item_cube (is_cash, name_ko, \`desc\`, item_no, overall_category, category, sub_category low_item_id, high_item_id) 
-      VALUES (?)`, query);
-
-      console.log(query);
-
-      console.log(ss);
-
-
+      await dbApi.selectQuery(`INSERT IGNORE INTO item_cube (is_cash, name_ko, \`desc\`, item_no, overall_category, category, sub_category, low_item_id, high_item_id) 
+      VALUES (${query.join()})`);
     }
     // console.log(`INSERT IGNORE INTO \`item_dict\` (req_jobs, req_level, is_cash, name_ko, \`desc\`, id, req_gender, category, overall_category, sub_category, lowItemId, highItemId) VALUES (
     //   '${query[0]}', ${query[1]}, ${query[2]}, '${query[3]}', '${query[4]}', ${query[5]}, ${query[6]}, '${query[7]}', '${query[8]}', '${query[9]}', ${query[10]}, ${query[11]}
