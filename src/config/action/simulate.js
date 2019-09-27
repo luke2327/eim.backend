@@ -1,7 +1,7 @@
 const dbApi = require('config/database/dbapi');
 
 module.exports = {
-  getSimulateItemByCube : async (params) => {
+  getSimulateItemByCube: async (params) => {
     if (params.label === 'rootAbyss') {
       params.label = '파프니르';
     } else if (params.label === 'absolab') {
@@ -46,5 +46,42 @@ module.exports = {
     }
 
     return await dbApi.selectQuery(sql);
-  }
+  },
+
+  getSimulateAvailableCubeByCube: async (params) => {
+    let sql;
+
+    switch (params.locale) {
+      case 'en': {
+        sql = `SELECT item_no, name_ko, \`desc\`, overall_category, category, sub_category FROM item_cube
+                  WHERE overall_category = '${params.overallCategory}'
+                    AND category = '${params.category}'
+                    AND sub_category = '${params.subCategory}'
+                    AND name_ko = '${params.cubeName}'
+                  GROUP BY name_ko`;
+
+        break;
+      } case 'ko': {
+        sql = `SELECT item_no, name_ko, \`desc\`, overall_category, category, sub_category FROM item_cube
+                  WHERE overall_category = '${params.overallCategory}'
+                    AND category = '${params.category}'
+                    AND sub_category = '${params.subCategory}'
+                    AND name_ko = '${params.cubeName}'
+                  GROUP BY name_ko`;
+
+        break;
+      } case 'ja': {
+        sql = `SELECT item_no, name_ko, \`desc\`, overall_category, category, sub_category FROM item_cube
+                  WHERE overall_category = '${params.overallCategory}'
+                    AND category = '${params.category}'
+                    AND sub_category = '${params.subCategory}'
+                    AND name_ko = '${params.cubeName}'
+                  GROUP BY name_ko`;
+
+        break;
+      }
+    }
+
+    return await dbApi.selectQuery(sql);
+  },
 }
