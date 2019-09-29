@@ -76,8 +76,8 @@ router.post('/item/name', async (req, res) => {
   res.send(result.data);
 });
 
-router.post('/item/input', async (req, res) => {
-  req.body.path = req.url.replace('/input', '');
+router.post('/input/item', async (req, res) => {
+  req.body.path = req.url.replace('/input/', '');
 
   const result = await common.sendMaple(req.body);
   let query_data = [];
@@ -110,17 +110,69 @@ router.post('/item/input', async (req, res) => {
       await dbApi.selectQuery(`INSERT IGNORE INTO item_cube (is_cash, name_ko, \`desc\`, item_no, overall_category, category, sub_category, low_item_id, high_item_id) 
       VALUES (${query.join()})`);
     }
-    // console.log(`INSERT IGNORE INTO \`item_dict\` (req_jobs, req_level, is_cash, name_ko, \`desc\`, id, req_gender, category, overall_category, sub_category, lowItemId, highItemId) VALUES (
-    //   '${query[0]}', ${query[1]}, ${query[2]}, '${query[3]}', '${query[4]}', ${query[5]}, ${query[6]}, '${query[7]}', '${query[8]}', '${query[9]}', ${query[10]}, ${query[11]}
-    // ) `);
-
-    // 아이템 INSERT 할 때 사용하세요
-    // await dbApi.insertQuery(`INSERT IGNORE INTO \`item_dict\` (req_jobs, req_level, is_cash, name_ko, \`desc\`, id, req_gender, category, overall_category, sub_category, lowItemId, highItemId) VALUES (
-    //   '${query[0]}', ${query[1]}, ${query[2]}, '${query[3]}', '${query[4]}', ${query[5]}, ${query[6]}, '${query[7]}', '${query[8]}', '${query[9]}', ${query[10]}, ${query[11]}
-    // ) `);
   })
 
   res.send('success');
+});
+
+router.post('/input/item-meta', async (req, res) => {
+  const mapleReq = {};
+  const insertData = {};
+  if (req.body.overallCategory === 'Equip' && (_.includes(req.body.category, 'One-Handed Weapon')) || _.includes(req.body.category, 'One-Handed Weapon')) {
+    const sql = `SELECT item_no FROM item_weapon WHERE
+      req_level >= ${req.body.minLevelFilter}
+      AND req_level <= ${req.body.maxLevelFilter}
+      AND overall_category = '${req.body.overallCategory}'
+      AND name_ko LIKE '%아케인셰이드 완드%'
+      AND category IN ('${req.body.category[0]}', '${req.body.category[1]}')`
+
+    const result = JSON.parse(JSON.stringify(await dbApi.selectQuery(sql)));
+
+    _.forEach(result, async (v) => {
+      mapleReq.path = `item/${v.item_no}`;
+      mapleReq.locale = req.body.locale;
+      const mapleRes = await common.sendMaple(mapleReq);
+
+      if (mapleRes) {
+        _.map(mapleRes.data.metaInfo, (value, key) => {
+          insertData[key] = value;
+
+          // console.log(key.split(/(?=[A-Z])/).join('_').toLowerCase());
+        });
+
+        // 필요한 키만 추출
+        delete insertData.mob;
+        delete insertData.iconRaw;
+        delete insertData.icon;
+        delete insertData.iconOrigin;
+        delete insertData.iconRawOrigin;
+        delete insertData.price;
+        delete insertData.tradeBlock;
+        delete insertData.exItem;
+        delete insertData.bossReward;
+        delete insertData.consumeSpec;
+        delete insertData.setCompleteCount;
+        delete insertData.vslots;
+        delete insertData.islots;
+        delete insertData.equipTradeBlock;
+
+        const noTransform = ['reqSTR', 'reqDEX', 'reqINT', 'reqLUK', 'incSTR', 'incDEX', 'incINT', 'incLUK', 'incPAD', 'incMAD', 'charmEXP'];
+
+        _.map(insertData, (value, key) => {
+          if (noTransform.includes(key)) {
+            console.log('true');
+          } else {
+            // 키를 snake_case 로 교체
+            const new_key = key.split(/(?=[A-Z])/).join('_').toLowerCase();
+            delete Object.assign(insertData, { [new_key]: insertData[key] })[key];
+          }
+        });
+
+        console.log(insertData);
+      }
+    });
+  }
+
 });
 
 module.exports = router;

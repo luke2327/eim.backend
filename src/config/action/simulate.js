@@ -16,7 +16,7 @@ module.exports = {
 
     switch (params.locale) {
       case 'en': {
-        sql = `SELECT id, req_level, req_jobs, name_ko, \`desc\`, category, overall_category, sub_category FROM item_weapon
+        sql = `SELECT item_no, req_level, req_jobs, name_ko, \`desc\`, category, overall_category, sub_category FROM item_weapon
                   WHERE req_level >= ${params.minItemLevel} 
                     AND req_level <= ${params.maxItemLevel} 
                     AND is_cash = ${params.isCash || 0} 
@@ -26,7 +26,7 @@ module.exports = {
 
         break;
       } case 'ko': {
-        sql = `SELECT id, req_level, req_jobs, name_ko, \`desc\`, category, overall_category, sub_category FROM item_weapon
+        sql = `SELECT item_no, req_level, req_jobs, name_ko, \`desc\`, category, overall_category, sub_category FROM item_weapon
                   WHERE req_level >= ${params.minItemLevel} 
                     AND req_level <= ${params.maxItemLevel} 
                     AND is_cash = ${params.isCash || 0} 
@@ -36,7 +36,7 @@ module.exports = {
 
         break;
       } case 'ja': {
-        sql = `SELECT id, req_level, req_jobs, name_ko, \`desc\`, category, overall_category, sub_category FROM item_weapon
+        sql = `SELECT item_no, req_level, req_jobs, name_ko, \`desc\`, category, overall_category, sub_category FROM item_weapon
                   WHERE req_level >= ${params.minItemLevel} 
                     AND req_level <= ${params.maxItemLevel} 
                     AND is_cash = ${params.isCash || 0} 
@@ -123,6 +123,11 @@ module.exports = {
               case 21: resultForm.push(`${v.title} : ${randomCase3}%`); break;
             }
           });
+        }
+        case 2: {
+          _.forEach(data, (v => {
+
+          }))
         }
       }
 
