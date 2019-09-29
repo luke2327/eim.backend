@@ -16,32 +16,39 @@ module.exports = {
 
     switch (params.locale) {
       case 'en': {
-        sql = `SELECT item_no, req_level, req_jobs, name_ko, \`desc\`, category, overall_category, sub_category FROM item_weapon
-                  WHERE req_level >= ${params.minItemLevel} 
-                    AND req_level <= ${params.maxItemLevel} 
-                    AND is_cash = ${params.isCash || 0} 
-                    AND overall_category = '${params.category}' 
-                    AND name_ko LIKE "%${params.label}%"
-                  GROUP BY name_ko`;
+        sql = `SELECT iw.item_no, iw.req_level, iw.req_jobs, iw.name_ko, iw.\`desc\`, iw.category, iw.overall_category, iw.sub_category, wm.* FROM item_weapon AS iw
+              INNER JOIN weapon_meta AS wm ON iw.item_no = wm.item_no
+                  WHERE iw.req_level >= ${params.minItemLevel} 
+                    AND iw.req_level <= ${params.maxItemLevel} 
+                    AND iw.is_cash = ${params.isCash || 0} 
+                    AND iw.overall_category = '${params.category}' 
+                    AND iw.name_ko LIKE "%${params.label}%"
+                    AND wm.trade_available IS NOT NULL
+                  GROUP BY iw.name_ko`;
 
         break;
       } case 'ko': {
-        sql = `SELECT item_no, req_level, req_jobs, name_ko, \`desc\`, category, overall_category, sub_category FROM item_weapon
-                  WHERE req_level >= ${params.minItemLevel} 
-                    AND req_level <= ${params.maxItemLevel} 
-                    AND is_cash = ${params.isCash || 0} 
-                    AND overall_category = '${params.category}'
-                    AND name_ko LIKE "%${params.label}%"
-                  GROUP BY name_ko`;
+        sql = `SELECT iw.item_no, iw.req_level, iw.req_jobs, iw.name_ko, iw.\`desc\`, iw.category, iw.overall_category, iw.sub_category, wm.* FROM item_weapon AS iw
+              INNER JOIN weapon_meta AS wm ON iw.item_no = wm.item_no
+                  WHERE iw.req_level >= ${params.minItemLevel} 
+                    AND iw.req_level <= ${params.maxItemLevel} 
+                    AND iw.is_cash = ${params.isCash || 0} 
+                    AND iw.overall_category = '${params.category}'
+                    AND iw.name_ko LIKE "%${params.label}%"
+                    AND wm.trade_available IS NOT NULL
+                  GROUP BY iw.name_ko`;
 
         break;
       } case 'ja': {
-        sql = `SELECT item_no, req_level, req_jobs, name_ko, \`desc\`, category, overall_category, sub_category FROM item_weapon
-                  WHERE req_level >= ${params.minItemLevel} 
-                    AND req_level <= ${params.maxItemLevel} 
-                    AND is_cash = ${params.isCash || 0} 
-                    AND overall_category = '${params.category}'
-                    AND name_ko LIKE "%${params.label}%"`;
+        sql = `SELECT iw.item_no, iw.req_level, iw.req_jobs, iw.name_ko, iw.\`desc\`, iw.category, iw.overall_category, iw.sub_category, wm.* FROM item_weapon AS iw
+              INNER JOIN weapon_meta AS wm ON iw.item_no = wm.item_no
+                  WHERE iw.req_level >= ${params.minItemLevel} 
+                    AND iw.req_level <= ${params.maxItemLevel} 
+                    AND iw.is_cash = ${params.isCash || 0} 
+                    AND iw.overall_category = '${params.category}'
+                    AND iw.name_ko LIKE "%${params.label}%"
+                    AND iw.wm.trade_available IS NOT NULL
+                  GROUP BY iw.name_ko`;
 
         break;
       }

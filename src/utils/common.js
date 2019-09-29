@@ -7,12 +7,10 @@ module.exports = {
     const l = config.getConfigMaple(params.locale);
     const url = `http://maplestory.io/api/${l.region}/${l.version}/${req.path}`;
 
+    console.log(url);
+
     delete params.path;
     delete params.locale;
-
-    console.log('url : ', url);
-
-    // const res = await axios.get(url)
 
     return type === 'get'
       ? axios.get(url, { params: params })

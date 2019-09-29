@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const common = require('utils/common');
+const mysql = require('mysql');
 const dbApi = require('config/database/dbapi');
 const _ = require('lodash');
 
@@ -123,7 +124,6 @@ router.post('/input/item-meta', async (req, res) => {
       req_level >= ${req.body.minLevelFilter}
       AND req_level <= ${req.body.maxLevelFilter}
       AND overall_category = '${req.body.overallCategory}'
-      AND name_ko LIKE '%아케인셰이드 완드%'
       AND category IN ('${req.body.category[0]}', '${req.body.category[1]}')`
 
     const result = JSON.parse(JSON.stringify(await dbApi.selectQuery(sql)));
@@ -136,8 +136,6 @@ router.post('/input/item-meta', async (req, res) => {
       if (mapleRes) {
         _.map(mapleRes.data.metaInfo, (value, key) => {
           insertData[key] = value;
-
-          // console.log(key.split(/(?=[A-Z])/).join('_').toLowerCase());
         });
 
         // 필요한 키만 추출
@@ -155,12 +153,18 @@ router.post('/input/item-meta', async (req, res) => {
         delete insertData.vslots;
         delete insertData.islots;
         delete insertData.equipTradeBlock;
+        delete insertData.notSale;
+        delete insertData.attack;
+        delete insertData.tuc;
+        delete insertData.isIot;
+        delete inerttData.vsIot;
 
-        const noTransform = ['reqSTR', 'reqDEX', 'reqINT', 'reqLUK', 'incSTR', 'incDEX', 'incINT', 'incLUK', 'incPAD', 'incMAD', 'charmEXP'];
+        const noTransform = ['reqSTR', 'reqDEX', 'reqINT', 'reqLUK', 'incSTR', 'incDEX', 'incINT', 'incLUK', 'incPAD', 'incMAD', 'charmEXP', 'incPDD', 'incMHP', 'incMMP', 'incMDD', 'incACC', 'incEVA'];
 
         _.map(insertData, (value, key) => {
           if (noTransform.includes(key)) {
-            console.log('true');
+            const new_key = key.replace(/([A-Z]+)/, '_$1').toLowerCase();
+            delete Object.assign(insertData, { [new_key]: insertData[key] })[key];
           } else {
             // 키를 snake_case 로 교체
             const new_key = key.split(/(?=[A-Z])/).join('_').toLowerCase();
@@ -168,7 +172,11 @@ router.post('/input/item-meta', async (req, res) => {
           }
         });
 
+        insertData.item_no = v.item_no;
         console.log(insertData);
+        const insert_sql = mysql.format('INSERT IGNORE INTO weapon_meta SET ?', insertData);
+        console.log(insert_sql);
+        await dbApi.selectQuery(insert_sql);
       }
     });
   }
