@@ -20,6 +20,12 @@ app.post('/api/enhance/dialog/input/search', async (req, res) => {
     res.send(result);
 });
 
+app.post('/api/enhance/form/lucky/channel', async (req, res) => {
+    const result = await enhanceApi.getEnhanceLuckyChannel();
+
+    res.send(result);
+});
+
 app.post('/api/vod/youtube/list', async (req, res) => {
     const result = await crawledApi.getVodList(req.body);
 
