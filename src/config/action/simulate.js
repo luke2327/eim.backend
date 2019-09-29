@@ -1,5 +1,6 @@
 const dbApi = require('config/database/dbapi');
 const potential = require('assets/potentialList');
+const potentialRandom = require('assets/potentialRandom');
 const _ = require('lodash');
 
 module.exports = {
@@ -95,6 +96,10 @@ module.exports = {
   },
 
   getSimulateSetPotential: async (params) => {
+    if (_.includes(params.category.toLowerCase(), 'weapon')) {
+      console.log('true');
+    }
+
     const determinePotential = (potentialLevel, data) => {
       let resultForm = [];
       switch (potentialLevel) {
