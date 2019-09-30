@@ -1,6 +1,5 @@
 const dbApi = require('config/database/dbapi');
 const potential = require('assets/potentialList');
-const potentialRandom = require('assets/potentialRandom');
 const itemUtil = require('utils/itemUtil');
 const _ = require('lodash');
 
@@ -97,39 +96,26 @@ module.exports = {
   },
 
   getSimulateSetPotential: async (params) => {
-    if (_.includes(params.category.toLowerCase(), 'weapon')) {
-      console.log('true');
-    }
-
-    console.log(params);
-    const potentialListSize = 3;
-    const addPotentialListSize = 3;
-    
+    const equipType = itemUtil.simulate.getEquipType(params.category);
     switch (params.cube) {
       // 레드 큐브
       case 5062009: {
-        console.log(params);
         // 큐브 레벨 상승
-        let potentialLevel = itemUtil.simulate.transformPotentialLevel(params.potentialLevel);
-        potentialLevel = params.potentialLevel === 0 ? 1 : params.potentialLevel;
+        let potentialLevel;
+        if (params.potentialLevel === 0) {
+          potentialLevel = 1;
+        } else {
+          potentialLevel = itemUtil.simulate.transformPotentialLevel(params.potentialLevel);
+        }
 
         const potentialList = potential.module.weaponPotentialList[potentialLevel];
         const currentPotentialSize = Object.keys(potentialList).length
-
-        // 옵션 매칭
-        const setForm = [];
-        for (let i = 0; i < potentialListSize; i++) {
-          randomPick = Math.floor(Math.random() * currentPotentialSize);
-          console.log('randomPick : ', randomPick);
-          setForm.push({id: randomPick, title: potentialList[randomPick]});
-        }
-
-        console.log(setForm);
+        const setForm = itemUtil.simulate.potentialOptionMatch(potentialLevel, equipType);
         const result = itemUtil.simulate.setPotential(potentialLevel, setForm);
 
         console.log(result);
 
-        return {potentialLevel: 1, 1: result[0], 2: result[1], 3: result[2]};
+        return { potentialLevel: 1, 1: result[0], 2: result[1], 3: result[2] };
       } case 5062010: {
         // 블랙 큐브
 

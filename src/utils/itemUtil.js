@@ -1,7 +1,14 @@
 const util = require('util');
 const _ = require('lodash');
+const potential = require('assets/potentialList');
 
 exports.simulate = {
+  getEquipType: (category) => {
+    if (_.includes(category.toLowerCase(), 'weapon')) {
+      return 'weapon';
+    }
+  },
+
   transformPotentialLevel: (potentialLevel) => {
     console.log(potentialLevel);
 
@@ -24,6 +31,25 @@ exports.simulate = {
     }
 
     return potentialLevel;
+  },
+
+  potentialOptionMatch: (potentialLevel, equipType, equipLevel) => {
+    const potentialListSize = 3;
+    const addPotentialListSize = 3;
+    let setForm = [];
+
+    if (equipType === 'weapon') {
+      const potentialList = potential.module.weaponPotentialList[potentialLevel];
+      const currentPotentialSize = Object.keys(potentialList).length
+  
+      // 옵션 매칭
+      for (let i = 0; i < potentialListSize; i++) {
+        randomPick = Math.floor(Math.random() * currentPotentialSize);
+        setForm.push({id: randomPick, title: potentialList[randomPick]});
+      }
+    }
+
+    return setForm;
   },
 
   setPotential: (potentialLevel, data) => {
