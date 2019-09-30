@@ -108,8 +108,6 @@ module.exports = {
           potentialLevel = itemUtil.simulate.transformPotentialLevel(params.potentialLevel);
         }
 
-        const potentialList = potential.module.weaponPotentialList[potentialLevel];
-        const currentPotentialSize = Object.keys(potentialList).length
         const setForm = itemUtil.simulate.potentialOptionMatch(potentialLevel, equipType);
         const result = itemUtil.simulate.setPotential(potentialLevel, setForm);
 
