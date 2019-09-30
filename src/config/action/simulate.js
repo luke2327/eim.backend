@@ -1,6 +1,7 @@
 const dbApi = require('config/database/dbapi');
 const potential = require('assets/potentialList');
 const potentialRandom = require('assets/potentialRandom');
+const itemUtil = require('utils/itemUtil');
 const _ = require('lodash');
 
 module.exports = {
@@ -100,84 +101,35 @@ module.exports = {
       console.log('true');
     }
 
-    const determinePotential = (potentialLevel, data) => {
-      let resultForm = [];
-      switch (potentialLevel) {
-        // 레어
-        case 1: {
-          _.forEach(data, (v) => {
-            randomCase1 = Math.floor(Math.random() * 10) + 3;
-            randomCase2 = (Math.floor(Math.random() * 2) + 1) * 40;
-            randomCase3 = Math.floor(Math.random() * 3) + 1;
-            randomCase4 = Math.floor(Math.random() * 12) + 1;
-            switch (v.id) {
-              case 0:
-              case 1:
-              case 2:
-              case 3: resultForm.push(`${v.title} : ${randomCase1}`); break;
-              case 4:
-              case 5:
-              case 6: resultForm.push(`${v.title} : ${randomCase2}`); break;
-              case 7: resultForm.push(`${v.title} : ${randomCase1}`); break;
-              case 8:
-              case 9:
-              case 10:
-              case 11:
-              case 12:
-              case 13:
-              case 14:
-              case 15: resultForm.push(`${v.title} : ${randomCase3}%`); break;
-              case 16: resultForm.push(`공격시 ${randomCase3}% ${v.title}`); break;
-              case 17:
-              case 18: resultForm.push(`${v.title} : ${randomCase4}`); break;
-              case 19:
-              case 20:
-              case 21: resultForm.push(`${v.title} : ${randomCase3}%`); break;
-            }
-          });
-        }
-        case 2: {
-          _.forEach(data, (v => {
-
-          }))
-        }
-      }
-
-      return resultForm
-    }
+    console.log(params);
+    const potentialListSize = 3;
+    const addPotentialListSize = 3;
     
     switch (params.cube) {
+      // 레드 큐브
       case 5062009: {
+        console.log(params);
         // 큐브 레벨 상승
-        // 현재는 레벨 업 구현이 안되어 있으므로 주석 처리
-        let potentialLevel
-        // if (Math.random() * 100 < 7) {
-        //   potentialLevel = 2;
-        // } else if (Math.random * 100 < 5 && params.potentialLevel >= 2) {
-        //   potentialLevel = 3;
-        // } else if (Math.random * 100 < 2 && params.potentialLevel >= 3) {
-        //   potentialLevel = 4;
-        // } else {
-        //   potentialLevel = params.potentialLevel === 0 ? 1 : params.potentialLevel;
-        // }
-
+        let potentialLevel = itemUtil.simulate.transformPotentialLevel(params.potentialLevel);
         potentialLevel = params.potentialLevel === 0 ? 1 : params.potentialLevel;
 
-        const currentPotentialSize = Object.keys(potential.module.weaponPotentialList[potentialLevel]).length
         const potentialList = potential.module.weaponPotentialList[potentialLevel];
+        const currentPotentialSize = Object.keys(potentialList).length
 
         // 옵션 매칭
         const setForm = [];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < potentialListSize; i++) {
           randomPick = Math.floor(Math.random() * currentPotentialSize);
+          console.log('randomPick : ', randomPick);
           setForm.push({id: randomPick, title: potentialList[randomPick]});
         }
 
-        const result = determinePotential(potentialLevel, setForm);
+        console.log(setForm);
+        const result = itemUtil.simulate.setPotential(potentialLevel, setForm);
+
+        console.log(result);
 
         return {potentialLevel: 1, 1: result[0], 2: result[1], 3: result[2]};
-        // 레드 큐브
-
       } case 5062010: {
         // 블랙 큐브
 
