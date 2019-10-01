@@ -110,7 +110,7 @@ module.exports = {
 
         console.log(result);
 
-        return { potentialLevel: potentialLevel, 1: result[0], 2: result[1], 3: result[2] };
+        return { potentialLevel: potentialLevel, potential: result };
       } case 5062010: {
         // 블랙 큐브
 
