@@ -101,9 +101,11 @@ module.exports = {
       // 레드 큐브
       case 5062009: {
         // 큐브 레벨 상승
+        console.log(params);
         const potentialLevel = params.potentialLevel === 0 ? 1 : itemUtil.simulate.transformPotentialLevel(params.potentialLevel);
-        const setForm = itemUtil.simulate.potentialOptionMatch(potentialLevel, equipType);
-        const result = itemUtil.simulate.setPotential(potentialLevel, equipType, setForm);
+        const setForm = itemUtil.simulate.potentialOptionMatch(potentialLevel, equipType, params.reqLevel);
+        const defaultRandomCase = itemUtil.simulate.getDefaultRandomCase(potentialLevel, equipType);
+        const result = itemUtil.simulate.setPotential(potentialLevel, equipType, setForm, defaultRandomCase);
 
         console.log(result);
 

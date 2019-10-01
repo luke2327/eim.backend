@@ -1,5 +1,20 @@
-exports.module = {
-  getRandomCase: (level) => {
-    
+exports.case = {
+  weapon: {
+    1: {
+      1: Math.floor(Math.random() * 2) + 1,
+      2: (Math.floor(Math.random() * 2) + 1) * 5,
+      3: 1,
+      4: 4,
+      5: [3, 10],
+      6: [20, 20],
+      7: [10, 1],
+      8: [20, 1],
+      9: [5, 1],
+      10: [10, 1],
+      11: [20, 1],
+      12: [10, 1],
+      13: [20, 1],
+      14: 15,
+    }
   }
-};
+}

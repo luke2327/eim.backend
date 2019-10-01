@@ -1,6 +1,7 @@
 const util = require('util');
 const _ = require('lodash');
 const potential = require('assets/potentialList');
+const defaultRandomCase = require('assets/potentialRandom');
 
 exports.simulate = {
   getEquipType: (category) => {
@@ -10,17 +11,15 @@ exports.simulate = {
   },
 
   transformPotentialLevel: (potentialLevel) => {
-    console.log(potentialLevel);
-
-    if (Math.random() * 100 < 7) {
+    if (Math.random() * 100 < 7 && potentialLevel < 2) {
       potentialLevel = 2;
 
       console.log('에픽으로 등급 업 성공!');
-    } else if (Math.random * 100 < 5 && potentialLevel >= 2) {
+    } else if (Math.random() * 100 < 5 && potentialLevel >= 2 && potentialLevel < 3) {
       potentialLevel = 3;
 
       console.log('유니크로 등급 업 성공!');
-    } else if (Math.random * 100 < 2 && potentialLevel >= 3) {
+    } else if (Math.random() * 100 < 2 && potentialLevel >= 3 && potentialLevel < 4) {
       potentialLevel = 4;
 
       console.log('레전드리로 등급 업 성공!');
@@ -36,30 +35,33 @@ exports.simulate = {
   potentialOptionMatch: (potentialLevel, equipType, equipLevel) => {
     const potentialListSize = 3;
     const addPotentialListSize = 3;
+    let potentialIncrease = 0;
     let setForm = [];
 
     if (equipType === 'weapon') {
-      const potentialList = potential.weaponPotentialList[potentialLevel];
+      const potentialList = potential.potentialList.weaponPotentialList[potentialLevel];
       const currentPotentialSize = Object.keys(potentialList).length
-  
-      // 옵션 매칭
-      for (let i = 0; i < potentialListSize; i++) {
-        randomPick = Math.floor(Math.random() * currentPotentialSize);
-        setForm.push({id: randomPick, title: potentialList[randomPick]});
+
+      while (potentialIncrease < potentialListSize) {
+        const randomPick = Math.floor(Math.random() * currentPotentialSize) + 1;
+        if (potentialList[randomPick].reqLevel <= equipLevel) {
+          setForm.push({ id: randomPick, title: potentialList[randomPick].title });
+          potentialIncrease++;
+        }
       }
     }
 
     return setForm;
   },
 
-  setPotential: (potentialLevel, equipType, data) => {
+  getDefaultRandomCase: (potentialLevel, equipType, level) => {
+    return defaultRandomCase.case[equipType][potentialLevel];
+  },
+
+  setPotential: (potentialLevel, equipType, data, defaultRandomCase) => {
+    // console.log(defaultRandomCase);
     let resultForm = [];
     if (equipType === 'weapon') {
-      default1 = Math.floor(Math.random() * 2) + 1;
-      default2 = (Math.floor(Math.random() * 2) + 1) * 5;
-      default3 = 1;
-      default4 = 4;
-
       switch (potentialLevel) {
         // 레어
         case 1: {
@@ -68,29 +70,15 @@ exports.simulate = {
             randomCase2 = (Math.floor(Math.random() * 2) + 1) * 40;
             randomCase3 = Math.floor(Math.random() * 3) + 1;
             randomCase4 = Math.floor(Math.random() * 12) + 1;
-            switch (v.id) {
-              case 0:
-              case 1:
-              case 2:
-              case 3: resultForm.push(util.format(v.title, randomCase1)); break;
-              case 4:
-              case 5:
-              case 6: resultForm.push(util.format(v.title, randomCase2)); break;
-              case 7: resultForm.push(util.format(v.title, randomCase1)); break;
-              case 8:
-              case 9:
-              case 10:
-              case 11:
-              case 12:
-              case 13:
-              case 14:
-              case 15: resultForm.push(util.format(v.title, randomCase3)); break;
-              case 16: resultForm.push(util.format(v.title, randomCase3)); break;
-              case 17:
-              case 18: resultForm.push(util.format(v.title, randomCase4)); break;
-              case 19:
-              case 20:
-              case 21: resultForm.push(util.format(v.title, randomCase3)); break;
+
+            if (_.includes([0,1,2,3,7], v.id)) {
+              resultForm.push(util.format(v.title, randomCase1));
+            } else if (_.includes([4,5,6], v.id)) {
+              resultForm.push(util.format(v.title, randomCase2));
+            } else if (_.includes([8,9,10,11,12,13,14,15,16,19,20,21], v.id)) {
+              resultForm.push(util.format(v.title, randomCase3));
+            } else if (_.includes([17, 18], v.id)) {
+              resultForm.push(util.format(v.title, randomCase4));
             }
           });
         }
