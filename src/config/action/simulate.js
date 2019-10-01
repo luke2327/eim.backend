@@ -99,12 +99,13 @@ module.exports = {
     const equipType = itemUtil.simulate.getEquipType(params.category);
     switch (params.cube) {
       // 레드 큐브
-      case 5062009: {
+      case 5062009:
+      case 5062010: {
         // 큐브 레벨 상승
         console.log(params);
         const potentialLevel = params.potentialLevel === 0 ? 1 : itemUtil.simulate.transformPotentialLevel(params.potentialLevel);
         const setForm = itemUtil.simulate.potentialOptionMatch(potentialLevel, equipType, params.reqLevel);
-        const defaultRandomCase = itemUtil.simulate.getDefaultRandomCase(potentialLevel, equipType);
+        const defaultRandomCase = itemUtil.simulate.getDefaultRandomCase(potentialLevel, equipType, params.reqLevel);
         const result = itemUtil.simulate.setPotential(potentialLevel, equipType, setForm, defaultRandomCase);
 
         console.log(result);
