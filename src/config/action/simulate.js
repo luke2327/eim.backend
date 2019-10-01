@@ -101,19 +101,13 @@ module.exports = {
       // 레드 큐브
       case 5062009: {
         // 큐브 레벨 상승
-        let potentialLevel;
-        if (params.potentialLevel === 0) {
-          potentialLevel = 1;
-        } else {
-          potentialLevel = itemUtil.simulate.transformPotentialLevel(params.potentialLevel);
-        }
-
+        const potentialLevel = params.potentialLevel === 0 ? 1 : itemUtil.simulate.transformPotentialLevel(params.potentialLevel);
         const setForm = itemUtil.simulate.potentialOptionMatch(potentialLevel, equipType);
-        const result = itemUtil.simulate.setPotential(potentialLevel, setForm);
+        const result = itemUtil.simulate.setPotential(potentialLevel, equipType, setForm);
 
         console.log(result);
 
-        return { potentialLevel: 1, 1: result[0], 2: result[1], 3: result[2] };
+        return { potentialLevel: potentialLevel, 1: result[0], 2: result[1], 3: result[2] };
       } case 5062010: {
         // 블랙 큐브
 

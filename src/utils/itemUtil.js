@@ -39,7 +39,7 @@ exports.simulate = {
     let setForm = [];
 
     if (equipType === 'weapon') {
-      const potentialList = potential.module.weaponPotentialList[potentialLevel];
+      const potentialList = potential.weaponPotentialList[potentialLevel];
       const currentPotentialSize = Object.keys(potentialList).length
   
       // 옵션 매칭
@@ -52,46 +52,54 @@ exports.simulate = {
     return setForm;
   },
 
-  setPotential: (potentialLevel, data) => {
+  setPotential: (potentialLevel, equipType, data) => {
     let resultForm = [];
-    switch (potentialLevel) {
-      // 레어
-      case 1: {
-        _.forEach(data, (v) => {
-          randomCase1 = Math.floor(Math.random() * 10) + 3;
-          randomCase2 = (Math.floor(Math.random() * 2) + 1) * 40;
-          randomCase3 = Math.floor(Math.random() * 3) + 1;
-          randomCase4 = Math.floor(Math.random() * 12) + 1;
-          switch (v.id) {
-            case 0:
-            case 1:
-            case 2:
-            case 3: resultForm.push(util.format(v.title, randomCase1)); break;
-            case 4:
-            case 5:
-            case 6: resultForm.push(util.format(v.title, randomCase2)); break;
-            case 7: resultForm.push(util.format(v.title, randomCase1)); break;
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15: resultForm.push(util.format(v.title, randomCase3)); break;
-            case 16: resultForm.push(util.format(v.title, randomCase3)); break;
-            case 17:
-            case 18: resultForm.push(util.format(v.title, randomCase4)); break;
-            case 19:
-            case 20:
-            case 21: resultForm.push(util.format(v.title, randomCase3)); break;
-          }
-        });
-      }
-      case 2: {
-        _.forEach(data, (v => {
+    if (equipType === 'weapon') {
+      default1 = Math.floor(Math.random() * 2) + 1;
+      default2 = (Math.floor(Math.random() * 2) + 1) * 5;
+      default3 = 1;
+      default4 = 4;
 
-        }))
+      switch (potentialLevel) {
+        // 레어
+        case 1: {
+          _.forEach(data, (v) => {
+            randomCase1 = Math.floor(Math.random() * 10) + 3;
+            randomCase2 = (Math.floor(Math.random() * 2) + 1) * 40;
+            randomCase3 = Math.floor(Math.random() * 3) + 1;
+            randomCase4 = Math.floor(Math.random() * 12) + 1;
+            switch (v.id) {
+              case 0:
+              case 1:
+              case 2:
+              case 3: resultForm.push(util.format(v.title, randomCase1)); break;
+              case 4:
+              case 5:
+              case 6: resultForm.push(util.format(v.title, randomCase2)); break;
+              case 7: resultForm.push(util.format(v.title, randomCase1)); break;
+              case 8:
+              case 9:
+              case 10:
+              case 11:
+              case 12:
+              case 13:
+              case 14:
+              case 15: resultForm.push(util.format(v.title, randomCase3)); break;
+              case 16: resultForm.push(util.format(v.title, randomCase3)); break;
+              case 17:
+              case 18: resultForm.push(util.format(v.title, randomCase4)); break;
+              case 19:
+              case 20:
+              case 21: resultForm.push(util.format(v.title, randomCase3)); break;
+            }
+          });
+        }
+        // 에픽
+        case 2: {
+          _.forEach(data, (v => {
+  
+          }));
+        }
       }
     }
 
