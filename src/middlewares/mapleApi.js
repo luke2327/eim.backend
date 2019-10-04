@@ -155,7 +155,6 @@ router.post('/input/item-meta', async (req, res) => {
         delete insertData.equipTradeBlock;
         delete insertData.notSale;
         delete insertData.attack;
-        delete insertData.tuc;
         delete insertData.isIot;
         delete inerttData.vsIot;
 
