@@ -64,28 +64,19 @@ module.exports = {
     switch (params.locale) {
       case 'en': {
         sql = `SELECT item_no, name_ko, \`desc\`, overall_category, category, sub_category FROM item_cube
-                  WHERE overall_category = '${params.overallCategory}'
-                    AND category = '${params.category}'
-                    AND sub_category = '${params.subCategory}'
-                    AND name_ko = '${params.cubeName}'
+                  WHERE item_no IN (${params.item_no})
                   GROUP BY name_ko`;
 
         break;
       } case 'ko': {
         sql = `SELECT item_no, name_ko, \`desc\`, overall_category, category, sub_category FROM item_cube
-                  WHERE overall_category = '${params.overallCategory}'
-                    AND category = '${params.category}'
-                    AND sub_category = '${params.subCategory}'
-                    AND name_ko = '${params.cubeName}'
+                  WHERE item_no IN (${params.item_no})
                   GROUP BY name_ko`;
 
         break;
       } case 'ja': {
         sql = `SELECT item_no, name_ko, \`desc\`, overall_category, category, sub_category FROM item_cube
-                  WHERE overall_category = '${params.overallCategory}'
-                    AND category = '${params.category}'
-                    AND sub_category = '${params.subCategory}'
-                    AND name_ko = '${params.cubeName}'
+                  WHERE item_no IN (${params.item_no})
                   GROUP BY name_ko`;
 
         break;
