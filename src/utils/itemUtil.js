@@ -11,23 +11,23 @@ exports.simulate = {
   },
 
   transformPotentialLevel: (potentialLevel) => {
-    // if (Math.random() * 100 < 7 && potentialLevel < 2) {
-    //   potentialLevel = 2;
+    if (Math.random() * 100 < 7 && potentialLevel < 2) {
+      potentialLevel = 2;
 
-    //   console.log('에픽으로 등급 업 성공!');
-    // } else if (Math.random() * 100 < 5 && potentialLevel >= 2 && potentialLevel < 3) {
-    //   potentialLevel = 3;
+      console.log('에픽으로 등급 업 성공!');
+    } else if (Math.random() * 100 < 5 && potentialLevel >= 2 && potentialLevel < 3) {
+      potentialLevel = 3;
 
-    //   console.log('유니크로 등급 업 성공!');
-    // } else if (Math.random() * 100 < 2 && potentialLevel >= 3 && potentialLevel < 4) {
-    //   potentialLevel = 4;
+      console.log('유니크로 등급 업 성공!');
+    } else if (Math.random() * 100 < 2 && potentialLevel >= 3 && potentialLevel < 4) {
+      potentialLevel = 4;
 
-    //   console.log('레전드리로 등급 업 성공!');
-    // } else {
-    //   potentialLevel = potentialLevel === 0 ? 1 : potentialLevel;
+      console.log('레전드리로 등급 업 성공!');
+    } else {
+      potentialLevel = potentialLevel === 0 ? 1 : potentialLevel;
 
-    //   console.log('등급 업 실패 ! 기존 유지');
-    // }
+      console.log('등급 업 실패 ! 기존 유지');
+    }
 
     return potentialLevel;
   },

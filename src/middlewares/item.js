@@ -5,8 +5,6 @@ const simulate = require('config/action/simulate');
 router.post('/simulate/item', async (req, res) => {
   const result = await simulate.getSimulateItemByCube(req.body);
 
-  console.log(result);
-
   res.send(result);
 });
 

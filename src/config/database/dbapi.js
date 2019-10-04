@@ -30,10 +30,6 @@ module.exports = {
       }
     });
 
-    console.log(data[0]);
-    console.log(data[1]);
-    console.log([data]);
-
     try {
       const query = await util.promisify(conn.query).bind(conn);
       result = await query(data[0], data[1]);
