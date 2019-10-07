@@ -1,15 +1,16 @@
+'use strict';
+
 const dbApi = require('config/database/dbapi');
-const _ = require('lodash');
 
 module.exports = {
-  getVodList : async (params) => {
+  getVodList: async (params) => {
 
     let sql;
 
     if (params) {
       sql = `SELECT * FROM vod ORDER BY create_tmp DESC LIMIT ${params.max}`;
     } else {
-      sql = `SELECT * FROM vod`;
+      sql = 'SELECT * FROM vod';
     }
     const res = await dbApi.selectQuery(sql);
     const httpScheme = 'https://',
@@ -23,4 +24,4 @@ module.exports = {
 
     return res;
   }
-}
+};

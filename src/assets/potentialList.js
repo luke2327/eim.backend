@@ -1,3 +1,5 @@
+'use strict';
+
 exports.potentialList = {
   weaponPotentialList: {
     1: {
@@ -44,7 +46,7 @@ exports.potentialList = {
       2: { title: 'HP 회복아이템 및 회복 스킬 효율', reqLevel: 10 },
     },
     4: {
-      1: { title: 'STR', reqLevel: 10},
+      1: { title: 'STR', reqLevel: 10 },
     }
   },
 }

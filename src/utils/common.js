@@ -1,3 +1,5 @@
+'use strict';
+
 const axios = require('axios');
 const config = require('utils/config');
 

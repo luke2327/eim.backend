@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   getConfigMaple: (locale) => {
     const result = {};
@@ -15,4 +17,4 @@ module.exports = {
 
     return result;
   },
-}
+};

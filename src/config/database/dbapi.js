@@ -1,7 +1,8 @@
+'use strict';
+
 const mysql = require('mysql');
 const util = require('util');
 const settings = require('./settings');
-
 
 module.exports = {
   selectQuery: async (data) => {
@@ -10,13 +11,14 @@ module.exports = {
 
     try {
       const query = await util.promisify(conn.query).bind(conn);
+
       result = await query(data);
     } catch (e) {
       console.log(e);
     } finally {
       conn.end();
     }
-    
+
     return result;
   },
 
@@ -32,13 +34,14 @@ module.exports = {
 
     try {
       const query = await util.promisify(conn.query).bind(conn);
+
       result = await query(data[0], data[1]);
     } catch (e) {
       console.log(e);
     } finally {
       conn.end();
     }
-    
+
     return result;
   }
-}
+};

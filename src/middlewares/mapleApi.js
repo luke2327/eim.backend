@@ -1,9 +1,10 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
 const common = require('utils/common');
 const mysql = require('mysql');
 const dbApi = require('config/database/dbapi');
-const _ = require('lodash');
 
 router.post('/item', async (req, res) => {
   req.body.path = req.url;
@@ -82,15 +83,15 @@ router.post('/input/item', async (req, res) => {
 
   const result = await common.sendMaple(req.body);
   let query_data = [];
-  const real_query = []
+  const real_query = [];
 
   req.body.locale = 'ko';
 
-  _.forEach(result.data, data => {
+  _.forEach(result.data, (data) => {
     _.map(data, (value, key) => {
       if (Array.isArray(value)) {
         query_data.push(value.join(' '));
-      } 
+      }
       else if (typeof value === 'object') {
         _.map(value, (sub_value, sub_key) => {
           query_data.push(typeof sub_value === 'string' ? `"${sub_value}"` : sub_value);
@@ -106,12 +107,12 @@ router.post('/input/item', async (req, res) => {
     query_data = [];
   });
 
-  _.forEach(real_query, async query => {
+  _.forEach(real_query, async (query) => {
     if (req.body.subCategoryFilter === 'Miracle Cube') {
       await dbApi.selectQuery(`INSERT IGNORE INTO item_cube (is_cash, name_ko, \`desc\`, item_no, overall_category, category, sub_category, low_item_id, high_item_id) 
       VALUES (${query.join()})`);
     }
-  })
+  });
 
   res.send('success');
 });
@@ -119,12 +120,13 @@ router.post('/input/item', async (req, res) => {
 router.post('/input/item-meta', async (req, res) => {
   const mapleReq = {};
   const insertData = {};
+
   if (req.body.overallCategory === 'Equip' && (_.includes(req.body.category, 'One-Handed Weapon')) || _.includes(req.body.category, 'One-Handed Weapon')) {
     const sql = `SELECT item_no FROM item_weapon WHERE
       req_level >= ${req.body.minLevelFilter}
       AND req_level <= ${req.body.maxLevelFilter}
       AND overall_category = '${req.body.overallCategory}'
-      AND category IN ('${req.body.category[0]}', '${req.body.category[1]}')`
+      AND category IN ('${req.body.category[0]}', '${req.body.category[1]}')`;
 
     const result = JSON.parse(JSON.stringify(await dbApi.selectQuery(sql)));
 
@@ -156,17 +158,19 @@ router.post('/input/item-meta', async (req, res) => {
         delete insertData.notSale;
         delete insertData.attack;
         delete insertData.isIot;
-        delete inerttData.vsIot;
+        delete insertData.vsIot;
 
         const noTransform = ['reqSTR', 'reqDEX', 'reqINT', 'reqLUK', 'incSTR', 'incDEX', 'incINT', 'incLUK', 'incPAD', 'incMAD', 'charmEXP', 'incPDD', 'incMHP', 'incMMP', 'incMDD', 'incACC', 'incEVA'];
 
         _.map(insertData, (value, key) => {
           if (noTransform.includes(key)) {
             const new_key = key.replace(/([A-Z]+)/, '_$1').toLowerCase();
+
             delete Object.assign(insertData, { [new_key]: insertData[key] })[key];
           } else {
             // 키를 snake_case 로 교체
             const new_key = key.split(/(?=[A-Z])/).join('_').toLowerCase();
+
             delete Object.assign(insertData, { [new_key]: insertData[key] })[key];
           }
         });
@@ -174,6 +178,7 @@ router.post('/input/item-meta', async (req, res) => {
         insertData.item_no = v.item_no;
         console.log(insertData);
         const insert_sql = mysql.format('INSERT IGNORE INTO weapon_meta SET ?', insertData);
+
         console.log(insert_sql);
         await dbApi.selectQuery(insert_sql);
       }

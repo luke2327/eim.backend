@@ -1,7 +1,7 @@
+'use strict';
+
 const dbApi = require('config/database/dbapi');
-const potential = require('assets/potentialList');
 const itemUtil = require('utils/itemUtil');
-const _ = require('lodash');
 
 module.exports = {
   getSimulateItemByCube: async (params) => {
@@ -88,8 +88,9 @@ module.exports = {
 
   getSimulateSetPotential: async (params) => {
     const equipType = itemUtil.simulate.getEquipType(params.category);
+
     switch (params.cube) {
-      // 레드 큐브
+      // 레드 큐브, 블랙 큐브
       case 5062009:
       case 5062010: {
         // 큐브 레벨 상승
@@ -102,12 +103,9 @@ module.exports = {
         console.log(result);
 
         return { potentialLevel: potentialLevel, potential: result };
-      } case 5062010: {
-        // 블랙 큐브
-
       } case 5062500: {
         // 에디셔널 큐브
       }
     }
   }
-}
+};

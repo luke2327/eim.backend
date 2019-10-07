@@ -1,5 +1,6 @@
+'use strict';
+
 const util = require('util');
-const _ = require('lodash');
 const potential = require('assets/potentialList');
 const defaultRandomCase = require('assets/potentialRandom');
 
@@ -34,16 +35,17 @@ exports.simulate = {
 
   potentialOptionMatch: (potentialLevel, equipType, equipLevel) => {
     const potentialListSize = 3;
-    const addPotentialListSize = 3;
+    // const addPotentialListSize = 3;
     let potentialIncrease = 0;
-    let setForm = [];
+    const setForm = [];
 
     if (equipType === 'weapon') {
       const potentialList = potential.potentialList.weaponPotentialList[potentialLevel];
-      const currentPotentialSize = Object.keys(potentialList).length
+      const currentPotentialSize = Object.keys(potentialList).length;
 
       while (potentialIncrease < potentialListSize) {
         const randomPick = Math.floor(Math.random() * currentPotentialSize) + 1;
+
         if (potentialList[randomPick].reqLevel <= equipLevel) {
           setForm.push({ id: randomPick, title: potentialList[randomPick].title });
           potentialIncrease++;
@@ -61,7 +63,8 @@ exports.simulate = {
 
     switch (potentialLevel) {
       case 1: {
-        let rareCase = {};
+        const rareCase = {};
+
         if (equipLevel <= 200) {
           rareCase[1] = 6;
           rareCase[2] = 12;
@@ -89,7 +92,8 @@ exports.simulate = {
   },
 
   setPotential: (potentialLevel, equipType, data, defaultRandomCase) => {
-    let resultForm = [];
+    const resultForm = [];
+
     if (equipType === 'weapon') {
       switch (potentialLevel) {
         // 레어
@@ -97,7 +101,7 @@ exports.simulate = {
           _.forEach(data, (v) => {
             if (_.includes([1, 2, 3, 4, 7, 8], v.id)) {
               resultForm.push(util.format(v.title, defaultRandomCase[1].calc() * defaultRandomCase[1].calcValue));
-            } else if (_.includes([5,6], v.id)) {
+            } else if (_.includes([5, 6], v.id)) {
               resultForm.push(util.format(v.title, defaultRandomCase[2].calc() * defaultRandomCase[2].calcValue));
             } else if (_.includes([9, 10, 11, 12, 13, 14, 16], v.id)) {
               resultForm.push(util.format(v.title, defaultRandomCase[3].calc * defaultRandomCase[3].calcValue));
@@ -123,18 +127,12 @@ exports.simulate = {
               resultForm.push(util.format(v.title, defaultRandomCase[14].calc[0] * defaultRandomCase[14].calcValue[0], defaultRandomCase[14].calc[1] * defaultRandomCase[14].calcValue[1]));
             } else if (_.includes([34], v.id)) {
               resultForm.push(util.format(v.title, defaultRandomCase[15].calc * defaultRandomCase[15].calcValue));
-            } 
+            }
           });
-        }
-        // 에픽
-        case 2: {
-          _.forEach(data, (v => {
-  
-          }));
         }
       }
     }
 
-    return resultForm
+    return resultForm;
   },
-}
+};
