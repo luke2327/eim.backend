@@ -200,16 +200,14 @@ router.post('/input/item-meta', async (req, res) => {
 
     const result = JSON.parse(JSON.stringify(await dbApi.selectQuery(sql)));
 
+    console.log(result);
+
     _.forEach(result, async (v) => {
       mapleReq.path = `item/${v.item_no}`;
       mapleReq.locale = req.body.locale;
       const mapleRes = await common.sendMaple(mapleReq);
-      axiosRetry(axios, { retryDelay: axiosRetry.exponentialDelay});
+      // axiosRetry(axios, { retryDelay: axiosRetry.exponentialDelay});
       insertData = {};
-
-      console.log(mapleRes.data.metaInfo);
-
-      console.log('---------------------------');
 
       if (mapleRes.data.metaInfo || mapleRes.metaInfo) {
         _.map(mapleRes.data.metaInfo, (value, key) => {
@@ -235,6 +233,7 @@ router.post('/input/item-meta', async (req, res) => {
         delete insertData.vsIot;
         delete insertData.vslot;
         delete insertData.tradeBlock;
+        delete insertData.notSale;
 
         const noTransform = ['reqSTR', 'reqDEX', 'reqINT', 'reqLUK', 'incSTR', 'incDEX', 'incINT', 'incLUK', 'incPAD', 'incMAD', 'charmEXP', 'incPDD', 'incMHP', 'incMMP', 'incMDD', 'incACC', 'incEVA'];
 

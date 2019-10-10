@@ -107,5 +107,14 @@ module.exports = {
         // 에디셔널 큐브
       }
     }
+  },
+
+  getEquipmentItem: async (params) => {
+    console.log(params);
+
+    const sql = `SELECT ie.name_${params.locale}, ie.req_jobs, ie.\`desc\`, ie.req_gender, ie.overall_category, ie.category, ie.sub_category, em.* FROM item_equip AS ie
+                `
+
+    return await dbApi.selectQuery(sql);
   }
 };

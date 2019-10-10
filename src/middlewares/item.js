@@ -19,9 +19,11 @@ router.post('/simulate/available-cube', async (req, res) => {
 router.post('/simulate/set-potential', async (req, res) => {
   const result = await simulate.getSimulateSetPotential(req.body);
 
-  console.log(req.body);
+  res.send(result);
+});
 
-  console.log(result);
+router.post('/simulate/equipment-item', async (req, res) => {
+  const result = await simulate.getEquipmentItem(req.body);
 
   res.send(result);
 });
