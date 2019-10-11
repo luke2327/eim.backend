@@ -110,10 +110,12 @@ module.exports = {
   },
 
   getEquipmentItem: async (params) => {
-    console.log(params);
-
     const sql = `SELECT ie.name_${params.locale}, ie.req_jobs, ie.\`desc\`, ie.req_gender, ie.overall_category, ie.category, ie.sub_category, em.* FROM item_equip AS ie
-                `
+                INNER JOIN equip_meta AS em ON ie.item_no = em.item_no
+                    WHERE ie.req_level >= ${params.minItemLevel}
+                      AND ie.req_level <= ${params.maxItemLevel}
+                      AND ie.category = '${params.category}'
+                      AND em.trade_available IS NOT NULL`;
 
     return await dbApi.selectQuery(sql);
   }
