@@ -86,7 +86,6 @@ router.post('/input/item', async (req, res) => {
   req.body.path = req.url.replace('/input/', '');
 
   const result = await common.sendMaple(req.body);
-  console.log(result.data);
   let query_data = [];
   const dataset = [];
 
@@ -206,7 +205,7 @@ router.post('/input/item-meta', async (req, res) => {
       mapleReq.path = `item/${v.item_no}`;
       mapleReq.locale = req.body.locale;
       const mapleRes = await common.sendMaple(mapleReq);
-      // axiosRetry(axios, { retryDelay: axiosRetry.exponentialDelay});
+
       insertData = {};
 
       if (mapleRes.data.metaInfo || mapleRes.metaInfo) {

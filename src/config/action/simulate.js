@@ -110,13 +110,32 @@ module.exports = {
   },
 
   getEquipmentItem: async (params) => {
-    const sql = `SELECT ie.name_${params.locale}, ie.req_jobs, ie.\`desc\`, ie.req_gender, ie.overall_category, ie.category, ie.sub_category, em.* FROM item_equip AS ie
-                INNER JOIN equip_meta AS em ON ie.item_no = em.item_no
-                    WHERE ie.req_level >= ${params.minItemLevel}
-                      AND ie.req_level <= ${params.maxItemLevel}
-                      AND ie.category = '${params.category}'
-                      AND em.trade_available IS NOT NULL`;
+    let sql;
+    let result = [];
 
-    return await dbApi.selectQuery(sql);
+    for (const data of params) {
+      if (_.includes(data.category, 'Armor')) {
+        sql = `SELECT ie.item_no, ie.req_level, ie.req_jobs, ie.name_${data.locale}, ie.\`desc\`, ie.req_gender, ie.overall_category, ie.category, ie.sub_category, em.* FROM item_equip AS ie
+        INNER JOIN equip_meta AS em ON ie.item_no = em.item_no
+            WHERE ie.req_level >= ${data.minItemLevel}
+              AND ie.req_level <= ${data.maxItemLevel}
+              AND ie.category IN ('${_.isArray(data.category) ? data.category.join("','") : data.category}')
+              AND em.trade_available IS NOT NULL`;
+      } else if (_.includes(data.category, 'TwoHandedWeapon') || _.includes(data.category, 'OneHandedWeapon')) {
+        sql = `SELECT iw.item_no, iw.req_level, iw.req_jobs, iw.name_${data.locale}, iw.\`desc\`, iw.category, iw.overall_category, iw.category, iw.sub_category, wm.* FROM item_weapon AS iw
+        INNER JOIN weapon_meta AS wm ON iw.item_no = wm.item_no
+            WHERE iw.req_level >= ${data.minItemLevel} 
+              AND iw.req_level <= ${data.maxItemLevel} 
+              AND iw.category IN ('${_.isArray(data.category) ? data.category.join("','") : data.category}')
+              AND wm.trade_available IS NOT NULL
+            GROUP BY iw.name_ko`;
+      }
+
+      result.push(await dbApi.selectQuery(sql));
+    }
+
+    result = _.flatten(result);
+
+    return result;
   }
 };
