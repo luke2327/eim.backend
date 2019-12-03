@@ -7,7 +7,7 @@ const settings = require('./settings');
 module.exports = {
   selectQuery: async (data) => {
     let result;
-    const conn = await mysql.createConnection(settings.connection);
+    const conn = mysql.createConnection(settings.connection);
 
     try {
       const query = await util.promisify(conn.query).bind(conn);
@@ -24,9 +24,9 @@ module.exports = {
 
   insertQuery: async (...data) => {
     let result;
-    const conn = await mysql.createConnection(settings.connection);
+    const conn = mysql.createConnection(settings.connection);
 
-    await conn.connect((err) => {
+    conn.connect((err) => {
       if (err) {
         console.log(err);
       }

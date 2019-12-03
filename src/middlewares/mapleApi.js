@@ -113,10 +113,10 @@ router.post('/input/item', async (req, res) => {
 
   _.forEach(dataset, async (query) => {
     if (req.body.subCategoryFilter === 'Miracle Cube') {
-      await dbApi.selectQuery(`INSERT IGNORE INTO item_cube (is_cash, name_ko, \`desc\`, item_no, overall_category, category, sub_category, low_item_id, high_item_id) 
+      await dbApi.selectQuery(`INSERT IGNORE INTO item_cube (is_cash, name_ko, \`desc\`, item_no, overall_category, category, sub_category, low_item_id, high_item_id)
       VALUES (${query.join()})`);
     } else if (req.body.categoryFilter === 'Armor') {
-      await dbApi.selectQuery(`INSERT IGNORE INTO item_equip (req_jobs, req_level, is_cash, name_ko, \`desc\`, item_no, req_gender, overall_category, category, sub_category, low_item_id, high_item_id) 
+      await dbApi.selectQuery(`INSERT IGNORE INTO item_equip (req_jobs, req_level, is_cash, name_ko, \`desc\`, item_no, req_gender, overall_category, category, sub_category, low_item_id, high_item_id)
       VALUES (${query.join()})`);
     }
   });

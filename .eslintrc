@@ -54,9 +54,9 @@
     "arrDetailExtension": true
   },
   "extends": "eslint:recommended",
-  "rules": {				
+  "rules": {
     "strict": ["error", "global"],																				// use strict 무조건, 맨위
-    
+
     "no-var": ["error"],																									// var쓰면안됨
     // "no-console": ["warn"],																								// 콘솔쓰면안됨
     "no-unused-vars": ["error", { "vars": "all", "args": "after-used" }],	// 선언해놓고 안쓰는거 안됨
@@ -69,7 +69,7 @@
 
     "prefer-const": ["error"],																						// 한번선언하는건 무조건 const
     "prefer-template": ["error"],																					// 무조건 `` 템플릿으로 강제
-    
+
     "template-curly-spacing": ["error"],																	// `${ abc}` 금지
     "computed-property-spacing": ["error", "never"],											// 객체속성 쓸모없는 공백 제거
     "block-spacing": ["error"],																						// 블록범위 패딩
@@ -77,10 +77,10 @@
     "key-spacing": ["error"],																							// { a:1, b:2 } x { a: 1, b: 2 } O
     "keyword-spacing": ["error"],																					// if() x if ()
     "object-curly-spacing": ["error", "always"],													// {a: 1 } x { a: 1 } o
-    "switch-colon-spacing": ["error"],																		// case: 
+    "switch-colon-spacing": ["error"],																		// case:
     "arrow-spacing": ["error"],																						// => {}
     "semi-spacing": ["error", { "before": false, "after": true }],				// const a ; const a;	// aaerogiajerg
-    
+
     "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],  // 화살표함수 소괄호 필수
     // "arrow-body-style": ["error", "as-needed"],															  // 화살표함수 중괄호 필수
     "dot-location": ["error", "property"],																// 엔터후 .
@@ -90,7 +90,7 @@
     "space-in-parens": ["error", "never"],
     "space-infix-ops": ["error"],
     "space-unary-ops": ["error"],
-    
+
     "curly": ["error"],
     "indent": ["error", 2, { "SwitchCase": 1, "VariableDeclarator": { "var": 2, "let": 2, "const": 3 }, "MemberExpression": 1 }],
     "quotes": ["error", "single", { "avoidEscape": true }],

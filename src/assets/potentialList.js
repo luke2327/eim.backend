@@ -49,4 +49,4 @@ exports.potentialList = {
       1: { title: 'STR', reqLevel: 10 },
     }
   },
-}
+};
