@@ -22,7 +22,7 @@ module.exports = {
                   WHERE iw.req_level >= ${params.minItemLevel}
                     AND iw.req_level <= ${params.maxItemLevel}
                     AND iw.is_cash = ${params.isCash || 0}
-                    AND iw.overall_category = '${params.category}'
+                    AND iw.overall_category = '${params.overallCategory}'
                     AND iw.name_ko LIKE "%${params.label}%"
                     AND wm.trade_available IS NOT NULL
                   GROUP BY iw.name_ko`;
@@ -34,7 +34,7 @@ module.exports = {
                   WHERE iw.req_level >= ${params.minItemLevel}
                     AND iw.req_level <= ${params.maxItemLevel}
                     AND iw.is_cash = ${params.isCash || 0}
-                    AND iw.overall_category = '${params.category}'
+                    AND iw.overall_category = '${params.overallCategory}'
                     AND iw.name_ko LIKE "%${params.label}%"
                     AND wm.trade_available IS NOT NULL
                   GROUP BY iw.name_ko`;
@@ -46,7 +46,7 @@ module.exports = {
                   WHERE iw.req_level >= ${params.minItemLevel}
                     AND iw.req_level <= ${params.maxItemLevel}
                     AND iw.is_cash = ${params.isCash || 0}
-                    AND iw.overall_category = '${params.category}'
+                    AND iw.overall_category = '${params.overallCategory}'
                     AND iw.name_ko LIKE "%${params.label}%"
                     AND iw.wm.trade_available IS NOT NULL
                   GROUP BY iw.name_ko`;

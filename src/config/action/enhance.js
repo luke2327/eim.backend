@@ -14,6 +14,7 @@ module.exports = {
 
     return await dbApi.selectQuery(sql);
   },
+
   getEnhanceLuckyChannel: async () => {
     const data = await dbApi.selectQuery('SELECT * FROM lucky_channel');
 

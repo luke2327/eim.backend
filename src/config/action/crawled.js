@@ -4,7 +4,6 @@ const dbApi = require('config/database/dbapi');
 
 module.exports = {
   getVodList: async (params) => {
-
     let sql;
 
     if (params) {
@@ -12,6 +11,7 @@ module.exports = {
     } else {
       sql = 'SELECT * FROM vod';
     }
+
     const res = await dbApi.selectQuery(sql);
     const httpScheme = 'https://',
           ytImgUnit = '/hqdefault.jpg',

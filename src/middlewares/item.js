@@ -5,6 +5,7 @@ const router = express.Router();
 const simulate = require('config/action/simulate');
 
 router.post('/simulate/item', async (req, res) => {
+  console.log(req.body);
   const result = await simulate.getSimulateItemByCube(req.body);
 
   res.send(result);
