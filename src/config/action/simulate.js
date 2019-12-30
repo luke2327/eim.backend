@@ -39,6 +39,7 @@ module.exports = {
     const sql = `
     SELECT
       ic.item_no,
+      ic.is_cash,
       ic.name_${params.locale},
       ic.\`desc\`,
       ic.overall_category,
