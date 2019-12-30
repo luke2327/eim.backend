@@ -4,8 +4,8 @@ const express = require('express');
 const router = express.Router();
 const simulate = require('config/action/simulate');
 
-router.post('/major-item', async (req, res) => {
-  const result = await simulate.getSimulateMajorItem(req.body);
+router.post('/major-weapon', async (req, res) => {
+  const result = await simulate.getSimulateMajorWeapon(req.body);
 
   res.send(result);
 });

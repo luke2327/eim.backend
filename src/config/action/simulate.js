@@ -4,7 +4,7 @@ const dbApi = require('config/database/dbapi');
 const itemUtil = require('utils/itemUtil');
 
 module.exports = {
-  getSimulateMajorItem: async (params) => {
+  getSimulateMajorWeapon: async (params) => {
     const rootAbyss = '%파프니르%';
     const absolab = '%앱솔랩스%';
     const arcaneUmbra = '%아케인셰이드%';
