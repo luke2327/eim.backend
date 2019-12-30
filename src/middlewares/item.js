@@ -4,26 +4,25 @@ const express = require('express');
 const router = express.Router();
 const simulate = require('config/action/simulate');
 
-router.post('/simulate/item', async (req, res) => {
-  console.log(req.body);
-  const result = await simulate.getSimulateItemByCube(req.body);
+router.post('/major-item', async (req, res) => {
+  const result = await simulate.getSimulateMajorItem(req.body);
 
   res.send(result);
 });
 
-router.post('/simulate/available-cube', async (req, res) => {
-  const result = await simulate.getSimulateAvailableCubeByCube(req.body);
+router.post('/available-cube', async (req, res) => {
+  const result = await simulate.getSimulateAvailableCube(req.body);
 
   res.send(result);
 });
 
-router.post('/simulate/set-potential', async (req, res) => {
+router.post('/set-potential', async (req, res) => {
   const result = await simulate.getSimulateSetPotential(req.body);
 
   res.send(result);
 });
 
-router.post('/simulate/equipment-item', async (req, res) => {
+router.post('/equipment-item', async (req, res) => {
   const result = await simulate.getEquipmentItem(req.body);
 
   res.send(result);

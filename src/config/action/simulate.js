@@ -4,84 +4,49 @@ const dbApi = require('config/database/dbapi');
 const itemUtil = require('utils/itemUtil');
 
 module.exports = {
-  getSimulateItemByCube: async (params) => {
-    if (params.label === 'rootAbyss') {
-      params.label = '파프니르';
-    } else if (params.label === 'absolab') {
-      params.label = '앱솔랩스';
-    } else if (params.label === 'arcaneUmbra') {
-      params.label = '아케인셰이드';
-    }
+  getSimulateMajorItem: async (params) => {
+    const rootAbyss = '%파프니르%';
+    const absolab = '%앱솔랩스%';
+    const arcaneUmbra = '%아케인셰이드%';
 
-    let sql;
-
-    switch (params.locale) {
-      case 'en': {
-        sql = `SELECT iw.item_no, iw.req_level, iw.req_jobs, iw.name_ko, iw.\`desc\`, iw.category, iw.overall_category, iw.sub_category, wm.* FROM item_weapon AS iw
-              INNER JOIN weapon_meta AS wm ON iw.item_no = wm.item_no
-                  WHERE iw.req_level >= ${params.minItemLevel}
-                    AND iw.req_level <= ${params.maxItemLevel}
-                    AND iw.is_cash = ${params.isCash || 0}
-                    AND iw.overall_category = '${params.overallCategory}'
-                    AND iw.name_ko LIKE "%${params.label}%"
-                    AND wm.trade_available IS NOT NULL
-                  GROUP BY iw.name_ko`;
-
-        break;
-      } case 'ko': {
-        sql = `SELECT iw.item_no, iw.req_level, iw.req_jobs, iw.name_ko, iw.\`desc\`, iw.category, iw.overall_category, iw.sub_category, wm.* FROM item_weapon AS iw
-              INNER JOIN weapon_meta AS wm ON iw.item_no = wm.item_no
-                  WHERE iw.req_level >= ${params.minItemLevel}
-                    AND iw.req_level <= ${params.maxItemLevel}
-                    AND iw.is_cash = ${params.isCash || 0}
-                    AND iw.overall_category = '${params.overallCategory}'
-                    AND iw.name_ko LIKE "%${params.label}%"
-                    AND wm.trade_available IS NOT NULL
-                  GROUP BY iw.name_ko`;
-
-        break;
-      } case 'ja': {
-        sql = `SELECT iw.item_no, iw.req_level, iw.req_jobs, iw.name_ko, iw.\`desc\`, iw.category, iw.overall_category, iw.sub_category, wm.* FROM item_weapon AS iw
-              INNER JOIN weapon_meta AS wm ON iw.item_no = wm.item_no
-                  WHERE iw.req_level >= ${params.minItemLevel}
-                    AND iw.req_level <= ${params.maxItemLevel}
-                    AND iw.is_cash = ${params.isCash || 0}
-                    AND iw.overall_category = '${params.overallCategory}'
-                    AND iw.name_ko LIKE "%${params.label}%"
-                    AND iw.wm.trade_available IS NOT NULL
-                  GROUP BY iw.name_ko`;
-
-        break;
-      }
-    }
+    const sql = `
+    SELECT
+      iw.item_no,
+      iw.req_level,
+      iw.req_jobs,
+      iw.name_${params.locale},
+      iw.\`desc\`,
+      iw.category,
+      iw.overall_category,
+      iw.sub_category,
+      wm.*
+    FROM item_weapon AS iw
+    INNER JOIN weapon_meta AS wm ON iw.item_no = wm.item_no
+    WHERE iw.is_cash = ${params.isCash || 0}
+      AND iw.overall_category = '${params.overallCategory}'
+      AND (
+            iw.name_${params.locale} LIKE "${rootAbyss}" OR
+            iw.name_${params.locale} LIKE "${absolab}" OR
+            iw.name_${params.locale} LIKE "${arcaneUmbra}"
+          )
+      AND wm.trade_available IS NOT NULL
+    GROUP BY iw.name_${params.locale}`;
 
     return await dbApi.selectQuery(sql);
   },
 
-  getSimulateAvailableCubeByCube: async (params) => {
-    let sql;
-
-    switch (params.locale) {
-      case 'en': {
-        sql = `SELECT item_no, name_ko, \`desc\`, overall_category, category, sub_category FROM item_cube
-                  WHERE item_no IN (${params.item_no})
-                  GROUP BY name_ko`;
-
-        break;
-      } case 'ko': {
-        sql = `SELECT item_no, name_ko, \`desc\`, overall_category, category, sub_category FROM item_cube
-                  WHERE item_no IN (${params.item_no})
-                  GROUP BY name_ko`;
-
-        break;
-      } case 'ja': {
-        sql = `SELECT item_no, name_ko, \`desc\`, overall_category, category, sub_category FROM item_cube
-                  WHERE item_no IN (${params.item_no})
-                  GROUP BY name_ko`;
-
-        break;
-      }
-    }
+  getSimulateAvailableCube: async (params) => {
+    const sql = `
+    SELECT
+      ic.item_no,
+      ic.name_${params.locale},
+      ic.\`desc\`,
+      ic.overall_category,
+      ic.category,
+      ic.sub_category
+    FROM item_cube AS ic
+    WHERE item_no IN (${params.availableCube.join()})
+    GROUP BY name_${params.locale}`;
 
     return await dbApi.selectQuery(sql);
   },
