@@ -4,7 +4,7 @@ const dbApi = require('config/database/dbapi');
 const itemUtil = require('utils/itemUtil');
 
 module.exports = {
-  getSimulateMajorWeapon: async (params) => {
+  getItemMajorWeapon: async (params) => {
     const rootAbyss = '%파프니르%';
     const absolab = '%앱솔랩스%';
     const arcaneUmbra = '%아케인셰이드%';
@@ -35,7 +35,7 @@ module.exports = {
     return await dbApi.selectQuery(sql);
   },
 
-  getSimulateAvailableCube: async (params) => {
+  getItemAvailableCube: async (params) => {
     const sql = `
     SELECT
       ic.item_no,
