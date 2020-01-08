@@ -9,7 +9,7 @@ module.exports = {
     const absolab = '%앱솔랩스%';
     const arcaneUmbra = '%아케인셰이드%';
 
-    const sql = `
+    const queryString = `
     SELECT
       iw.item_no,
       iw.req_level,
@@ -32,11 +32,11 @@ module.exports = {
       AND wm.trade_available IS NOT NULL
     GROUP BY iw.name_${params.locale}`;
 
-    return await dbApi.selectQuery(sql);
+    return await dbApi.selectQuery(queryString);
   },
 
   getItemAvailableCube: async (params) => {
-    const sql = `
+    const queryString = `
     SELECT
       ic.item_no,
       ic.is_cash,
@@ -49,7 +49,7 @@ module.exports = {
     WHERE item_no IN (${params.availableCube.join()})
     GROUP BY name_${params.locale}`;
 
-    return await dbApi.selectQuery(sql);
+    return await dbApi.selectQuery(queryString);
   },
 
   getSimulateSetPotential: async (params) => {
@@ -76,19 +76,19 @@ module.exports = {
   },
 
   getEquipmentItem: async (params) => {
-    let sql;
+    let queryString;
     let result = [];
 
     for (const data of params) {
       if (_.includes(data.category, 'Armor')) {
-        sql = `SELECT ie.item_no, ie.req_level, ie.req_jobs, ie.name_${data.locale}, ie.\`desc\`, ie.req_gender, ie.overall_category, ie.category, ie.sub_category, em.* FROM item_equip AS ie
+        queryString = `SELECT ie.item_no, ie.req_level, ie.req_jobs, ie.name_${data.locale}, ie.\`desc\`, ie.req_gender, ie.overall_category, ie.category, ie.sub_category, em.* FROM item_equip AS ie
         INNER JOIN equip_meta AS em ON ie.item_no = em.item_no
             WHERE ie.req_level >= ${data.minItemLevel}
               AND ie.req_level <= ${data.maxItemLevel}
               AND ie.category IN ('${_.isArray(data.category) ? data.category.join("','") : data.category}')
               AND em.trade_available IS NOT NULL`;
       } else if (_.includes(data.category, 'TwoHandedWeapon') || _.includes(data.category, 'OneHandedWeapon')) {
-        sql = `SELECT iw.item_no, iw.req_level, iw.req_jobs, iw.name_${data.locale}, iw.\`desc\`, iw.category, iw.overall_category, iw.category, iw.sub_category, wm.* FROM item_weapon AS iw
+        queryString = `SELECT iw.item_no, iw.req_level, iw.req_jobs, iw.name_${data.locale}, iw.\`desc\`, iw.category, iw.overall_category, iw.category, iw.sub_category, wm.* FROM item_weapon AS iw
         INNER JOIN weapon_meta AS wm ON iw.item_no = wm.item_no
             WHERE iw.req_level >= ${data.minItemLevel}
               AND iw.req_level <= ${data.maxItemLevel}
@@ -97,7 +97,7 @@ module.exports = {
             GROUP BY iw.name_ko`;
       }
 
-      result.push(await dbApi.selectQuery(sql));
+      result.push(await dbApi.selectQuery(queryString));
     }
 
     result = _.flatten(result);
