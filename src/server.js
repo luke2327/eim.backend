@@ -7,6 +7,7 @@ const PORT = 6050;
 const enhanceApi = require('config/action/enhance');
 const crawledApi = require('config/action/crawled');
 const mapleApi = require('middlewares/mapleApi');
+const notice = require('middlewares/notice');
 const item = require('middlewares/item');
 
 global._ = require('lodash');
@@ -14,6 +15,7 @@ global._ = require('lodash');
 app.use(cors());
 app.use(express.json());
 app.use('/api/maple', mapleApi);
+app.use('/api/notice', notice);
 app.use('/api/item', item);
 
 app.post('/api/enhance/dialog/input/search', async (req, res) => {
