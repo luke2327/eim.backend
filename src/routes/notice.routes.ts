@@ -1,19 +1,20 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
+import { Notice, NoticeDetail } from '../models/notice/notice.interface';
 import notice from '../controllers/notice';
 import ck from 'camelcase-keys';
 
 const router = Router();
 
-router.post('/getNotice', async (req, res) => {
+router.post('/getNotice', async (req: Request, res: Response, next: NextFunction) => {
   const result = await notice.getNotice(req.body)
-    .then((re: any) => ck(re, { deep: true }));
+    .then((re: Notice | unknown) => ck(re as Notice, { deep: true }));
 
   res.send(result);
 });
 
-router.post('/getNoticeDetail', async (req, res) => {
+router.post('/getNoticeDetail', async (req: Request, res: Response) => {
   const result = await notice.getNoticeDetail(req.body)
-    .then((re: any) => ck(re, { deep: true }));
+    .then((re: NoticeDetail | unknown) => ck(re as NoticeDetail, { deep: true }));
 
   res.send(result);
 });
