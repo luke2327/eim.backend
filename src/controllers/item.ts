@@ -1,5 +1,5 @@
 import api from '../database/connection';
-import { GetItemMajorWeaponReq } from '../models/item/item.interface';
+import { GetItemMajorWeaponReq, GetItemAvailableCubeReq } from '../models/item/item.interface';
 
 export default {
   getItemMajorWeapon: async (params: GetItemMajorWeaponReq) => {
@@ -33,7 +33,7 @@ export default {
     return await api.selectQuery(queryString);
   },
 
-  getItemAvailableCube: async (params: any) => {
+  getItemAvailableCube: async (params: GetItemAvailableCubeReq) => {
     const queryString = `
       SELECT
         ic.item_no,
