@@ -1,0 +1,8 @@
+{
+  "extends": "tslint-config-standard",
+  "rules": {
+    "space-before-function-paren": false,
+    "no-return-await": false,
+    "semicolon": [true, "always", "ignore-interfaces"]
+  }
+}

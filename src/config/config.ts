@@ -1,6 +1,6 @@
-'use strict';
+export const PORT = 6050;
 
-module.exports = {
+export const DB_CONFIG = {
   connection: {
     host: '34.207.159.244',
     user: 'root',
