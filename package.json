@@ -1,10 +1,13 @@
 {
   "name": "eim.backend",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "main": "index.js",
   "repository": "https://f35f918b0e1867334a97861f223b36075b943f45@github.com/luke2327/eim.backend.git",
   "author": "luke2327 <qwepoi8526@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "scripts": {
     "dist-server": "yarn lint && tsc && node dist/src/server",
     "dev-server": "NODE_PATH=src nodemon src/server.ts",
