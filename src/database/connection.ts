@@ -1,11 +1,11 @@
-import mysql from 'mysql2';
+import mysql, { RowDataPacket } from 'mysql2';
 import util from 'util';
 import { DB_CONFIG } from '../config/config';
 
 export default {
-  selectQuery: async (data: any) => {
-    let result;
+  selectQuery: async (data: any): Promise<RowDataPacket> => {
     const conn = mysql.createConnection(DB_CONFIG.connection);
+    let result: any;
 
     try {
       const query = util.promisify(conn.query).bind(conn);
