@@ -1,4 +1,4 @@
-import { SUPPORTED_LANGUAGE, SUPPORTED_REGION } from '../core/supported.type';
+import { SUPPORTED_LANGUAGE } from '../core/supported.type';
 import {
   OVERALL_CATEGORY,
   AVAILABLE_CUBE,
