@@ -2,7 +2,7 @@ export const PORT = 6050;
 
 export const DB_CONFIG = {
   connection: {
-    host: '34.207.159.244',
+    host: '54.172.3.134',
     user: 'root',
     password: 'sin5chel',
     port: 3306,
