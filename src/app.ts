@@ -3,6 +3,7 @@ import { CommonErr } from './models/core/error.interface';
 import cors from 'cors';
 import item from './routes/item.routes';
 import notice from './routes/notice.routes';
+import entertainment from './routes/entertainment.routes';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(json());
 /** add middlewares */
 app.use('/api/item', item);
 app.use('/api/notice', notice);
+app.use('/api/entertainment', entertainment);
 
 /** catch 404 and forward to error handler */
 app.use((req: Request, res: Response, next: NextFunction) => {
